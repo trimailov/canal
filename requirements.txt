@@ -5,13 +5,16 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 
-asgiref==0.11.2           # via channels, daphne
+asgi-redis==0.10.0
+asgiref==0.11.2           # via asgi-redis, channels, daphne
 autobahn==0.13.1          # via daphne
 channels==0.11.0
 daphne==0.10.3            # via channels
 django==1.9.5
+msgpack-python==0.4.7     # via asgi-redis
 psycopg2==2.6.1
-six==1.10.0               # via asgiref, autobahn, txaio
+redis==2.10.5             # via asgi-redis
+six==1.10.0               # via asgi-redis, asgiref, autobahn, txaio
 twisted==16.1.0           # via daphne
 txaio==2.3.1              # via autobahn
 zope.interface==4.1.3     # via twisted

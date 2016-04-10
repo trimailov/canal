@@ -77,6 +77,8 @@ Vagrant.configure(2) do |config|
     sudo -u postgres createdb channels
     sudo -u postgres psql -c "CREATE USER vagrant CREATEDB;"
 
+    sudo apt-get install -y redis-server
+
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
     sudo apt-get install -y python3.5
