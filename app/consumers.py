@@ -1,5 +1,12 @@
-from channels import Group
+from channels import Group, Channel
 from channels.sessions import channel_session
+
+
+# Connected to chat-messages
+def msg_consumer(message):
+    Group("chat-%s" % message.content['room']).send({
+        "text": message.content['text'],
+    })
 
 
 # Connected to websocket.connect
@@ -17,8 +24,12 @@ def ws_connect(message):
 # Connected to websocket.receive
 @channel_session
 def ws_message(message):
-    Group("chat-%s" % message.channel_session['room']).send({
-        "text": message['text'],
+    # Group("chat-%s" % message.channel_session['room']).send({
+    #     "text": message['text'],
+    # })
+    Channel('chat-messages').send({
+        "text": message.content['text'],
+        "room": message.channel_session['room'],
     })
 
 
