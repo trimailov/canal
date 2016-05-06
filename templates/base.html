@@ -3,24 +3,21 @@
 <head>
   <title>canal</title>
   <script>
-    var initWebSocket = function() {
-      socket = new WebSocket("ws://127.0.0.1:8080/chat/");
-      socket.onmessage = function(e) {
-          alert(e.data);
-      }
-      socket.onopen = function() {
-          socket.send("hello world");
-      }
+    socket = new WebSocket("ws://127.0.0.1:8080/chat/");
+    socket.onmessage = function(e) {
+        alert(e.data);
     }
 
     var sendMessage = function() {
-      // getting variable initiated in another function :(
-      socket.send("hello Python");
+      var message = document.querySelector('form input[name="message"]').value
+      socket.send(message);
     }
   </script>
 </head>
 <body>
-  <button onclick="initWebSocket();">Connect</button>
-  <button onclick="sendMessage();">Say hello</button>
+  <form>
+    <input type="text" name="message">
+    <button onclick="sendMessage();">Say hello</button>
+  </form>
 </body>
 </html>
