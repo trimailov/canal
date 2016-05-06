@@ -24,9 +24,6 @@ def ws_connect(message):
 # Connected to websocket.receive
 @channel_session
 def ws_message(message):
-    # Group("chat-%s" % message.channel_session['room']).send({
-    #     "text": message['text'],
-    # })
     Channel('chat-messages').send({
         "text": message.content['text'],
         "room": message.channel_session['room'],
