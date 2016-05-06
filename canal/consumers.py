@@ -15,7 +15,7 @@ def ws_connect(message):
     # Work out room name from path (ignore slashes)
     room = message.content['path'].strip(b"/")
     # django session must be JSON serializable as `bytes` are not
-    room = room.decode()
+    room = room.decode('utf-8')
     # Save room in session and add us to the group
     message.channel_session['room'] = room
     Group("chat-%s" % room).add(message.reply_channel)
