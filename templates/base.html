@@ -9,13 +9,26 @@
     }
 
     var sendMessage = function() {
-      var message = document.querySelector('input[name="message"]').value
+      var message = document.querySelector('input[name="message"].first-chat').value;
       socket.send(message);
+    }
+
+    task_socket = new WebSocket("ws://127.0.0.1:8080/second-chat/");
+    task_socket.onmessage = function(e) {
+        alert(e.data);
+    }
+
+    var beginTask = function() {
+      var message = document.querySelector('input[name="message"].second-chat').value;
+      task_socket.send(message);
     }
   </script>
 </head>
 <body>
-  <input type="text" name="message">
-  <button onclick="sendMessage();">Say hello</button>
+  <input class="first-chat" type="text" name="message">
+  <button onclick="sendMessage();">Send message</button>
+  <br>
+  <input class="second-chat" type="text" name="message">
+  <button onclick="beginTask();">Send to second chat</button>
 </body>
 </html>
