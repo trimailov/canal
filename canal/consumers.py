@@ -1,9 +1,19 @@
+import time
+
 from channels import Group, Channel
 from channels.sessions import channel_session
 
 
 # Connected to chat-messages
 def msg_consumer(message):
+    Group("chat-%s" % message.content['room']).send({
+        "text": message.content['text'],
+    })
+
+
+# Connected to slwo-chat-messages
+def slow_msg_consumer(message):
+    time.sleep(5)
     Group("chat-%s" % message.content['room']).send({
         "text": message.content['text'],
     })
@@ -25,6 +35,18 @@ def ws_connect(message):
 @channel_session
 def ws_message(message):
     Channel('chat-messages').send({
+        "text": message.content['text'],
+        "room": message.channel_session['room'],
+    })
+
+
+# Connected to websocket.receive
+@channel_session
+def slow_ws_message(message):
+    message.reply_channel.send({
+        "text": "message sent, wait for reply"
+    })
+    Channel('slow-chat-messages').send({
         "text": message.content['text'],
         "room": message.channel_session['room'],
     })
